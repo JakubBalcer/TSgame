@@ -1,4 +1,5 @@
 import { Scene } from './classes/Scene'
+import { Interactable } from './interfaces/Interactable'
 
 export class Stage {
     width: number
@@ -7,6 +8,8 @@ export class Stage {
     ctx: CanvasRenderingContext2D
     scenes: Map<string, Scene>
     currentScene: Scene
+    interactables: Interactable[]
+    private onSceneChangeFn: Function
     private static instance: Stage
 
     private constructor(width: number, height: number) {
@@ -36,6 +39,12 @@ export class Stage {
 
     changeScene(name: string): void {
         this.currentScene = this.scenes.get(name)
+        this.loadInteractables(this.currentScene)
+        if (this.onSceneChangeFn) this.onSceneChangeFn(this.currentScene)
+    }
+
+    private loadInteractables(scene: Scene): void {
+        this.interactables = scene.interactables
     }
 
     setScene(scene: Scene): void {
@@ -44,5 +53,9 @@ export class Stage {
 
     draw(): void {
         this.currentScene.draw()
+    }
+
+    onSceneChange(fn: (scene: Scene) => void): void {
+        this.onSceneChangeFn = fn
     }
 }

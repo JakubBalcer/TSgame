@@ -1,4 +1,5 @@
 import { Scene } from '../classes/Scene'
+import { World } from '../classes/World'
 import { Card } from '../components/Card'
 export class Field extends Scene {
     constructor() {
@@ -7,9 +8,11 @@ export class Field extends Scene {
     }
 
     init(): void {
-        super.createWorld()
-        let card = new Card(600, 200, 100, 160, '../../public/assets/card.png')
+        // super.createWorld()
+        let card = new Card(1140, 30, 100, 160, './assets/card.png')
+        // World.getInstance().addEntity(card)
 
         super.addDrawable(card)
+        super.addInteractable(card)
     }
 }

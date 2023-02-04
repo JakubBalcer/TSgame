@@ -1,14 +1,18 @@
 import { Drawable } from '../interfaces/Drawable'
 import { Ui } from '../classes/Ui'
 import { World } from './World'
+import { Interactable } from '../interfaces/Interactable';
 
 export abstract class Scene {
     drawables: Drawable[]
     world: World
     ui: Ui
+    interactables: Interactable[]
+
 
     constructor() {
         this.drawables = new Array<Drawable>()
+        this.interactables = new Array<Interactable>()
     }
 
     draw(): void {
@@ -26,6 +30,12 @@ export abstract class Scene {
     createWorld(): void {
         this.world = World.getInstance()
     }
+
+    addInteractable(interactable: Interactable): void {
+        this.interactables.push(interactable)
+    }
+    
+
 
     // ABSTRACT METHODS
 
